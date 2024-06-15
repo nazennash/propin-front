@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../../components/pages/stores/Cart';
 
-export const Products = (props) => {
-    const carts = useSelector(store => store.cart.items);
-    console.log(carts)
-    const dispatch = useDispatch();
-
+export const BrowseByCategory = (props) => {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [hasNextPage, setHasNextPage] = useState(false);
 
     useEffect(() => {
         getProducts();
     }, [currentPage]);
 
+
     const getProducts = async () => {
         try {
-            const url = `http://127.0.0.1:8000/products/products/?page=${currentPage}`;
+            const url = `http://127.0.0.1:8000/products/main_category/?page=${currentPage}`;
             const response = await axios.get(url);
             setProducts(response.data.results);
         } catch (error) {
@@ -27,7 +23,9 @@ export const Products = (props) => {
     };
 
     const nextPage = () => {
-        setCurrentPage(currentPage + 1);
+        if (hasNextPage) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     const prevPage = () => {
@@ -35,32 +33,15 @@ export const Products = (props) => {
             setCurrentPage(currentPage - 1);
         }
     };
-
-    const handleAddToCart = (product) => {
-        dispatch(addToCart({
-            productId: product.id,
-            description: product.description,
-            ...product,
-            quantity: 1,
-        }));
-    };
-
     return (
-        <div className="bg-white container mx-auto">
-            <div className="mx-auto px-4 py-10 sm:px-6 sm:py-15 ">
+        <div className="bg-white">
+            <div className="mx-auto  px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                 <h2><span className="text-2xl font-bold text-gray-900">Products |</span> Don't miss the current offers until the end of August </h2>
-                <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8 m-3 sm:mx-0">
+                <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8 m-3 sm:mx-0">
                     {products.map((product, index) => (
                         <div key={index} className="group relative border rounded-lg p-3">
-                            <div className='flex items-center justify-between'>
-                                <span className='bg-blue-500 text-white p-1 rounded-full text-[12px] font-bold text-center flex items-center justify-center'
-                                    style={{ width: '30px', height: '30px' }}>
-                                    {product.discount_percentage}%
-                                </span>
 
-                                <span className="mt-1 text-sm text-gray-500">{product.color}</span>
-                            </div>
-                            <div className="object-cover w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
+                            <div className="object-cover w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
                                 <img
                                     src={product.image}
                                     alt={product.name}
@@ -68,16 +49,14 @@ export const Products = (props) => {
                                 />
                             </div>
                             <div className="mt-4 flex justify-between">
-                                <div>
+                                <div className='align-center'>
                                     <h3 className="text-md text-gray-700 font-bold">
                                         <a href={product.href}>
                                             <span aria-hidden="true" className="" />
                                             {product.name}
                                         </a>
                                     </h3>
-                                    <button onClick={() => handleAddToCart(product)} className="bg-gray-300 px-2 py-1 tracking-tight rounded-md mt-1 text-sm text-gray-500 hover:text-blue-500">Add to Cart</button>
                                 </div>
-                                <p className="text-sm font-medium text-gray-900">{product.price}</p>
                             </div>
                         </div>
                     ))}

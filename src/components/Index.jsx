@@ -3,6 +3,10 @@ import { useAuth } from "./Auth";
 import { Products } from "./pages/Products";
 import { SlideShow } from "./pages/SlideShow";
 import { FirstInfo } from "./pages/FirstInfo";
+import { NewArrivals } from "./pages/NewArrivals";
+import { MainCategoryList } from "./pages/MainCategoryList";
+import { MainCategory } from "./pages/MainCategory";
+
 
 export const Index = () => {
 
@@ -13,7 +17,7 @@ export const Index = () => {
       <div>
         <div className="mx-auto container flex text-center items-center justify-center shadow-sm p-6">
           <div>
-            <div className="sm:hidden sm:ml-6 ">
+            <div className="md:hidden mx-auto ">
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
                   type="text"
@@ -26,10 +30,23 @@ export const Index = () => {
             </div>
           </div>
         </div>
-        <hr />
-        <SlideShow />
+        <hr className="md: hidden" />
+        <div className='md:mt-5 border container mx-auto p-5 grid grid-cols-12 gap-5'>
+          <div className='md:col-span-4 lg:col-span-3 hidden md:block'>
+            <MainCategory />
+          </div>
+          <div className='col-span-12 md:col-span-8 lg:col-span-9 '>
+            <SlideShow />
+          </div>
+          <br />
+        </div>
+        <FirstInfo />
+        <NewArrivals />
         <Products />
         <FirstInfo />
+        <MainCategoryList />
+        <br />
+        <br />
       </div>
     </>
   )

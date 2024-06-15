@@ -4,7 +4,7 @@ import { Box, Check2Circle, CreditCard, Heart } from 'react-bootstrap-icons';
 export const FirstInfo = () => {
 	return (
 		<div className='container mx-auto'>
-			<div className='sm:hidden gap-5 grid lg:grid-cols-4 md:gap-10 lg:gap-10 md:grid-cols-2 md:p-5 p-10'>
+			<div className='gap-5 grid lg:grid-cols-4 md:gap-10 lg:gap-10 md:grid-cols-2 md:p-5 p-10'>
 				<div className='col-span-1 text-center'>
 					<CreditCard
 						size={25}
@@ -38,8 +38,6 @@ export const FirstInfo = () => {
 				</div>
 			</div>
 			<hr />
-			<br />
-			<br />
 		</div>
 	);
 };

@@ -49,7 +49,7 @@ export const SlideShow = () => {
 	}, [currentIndex]);
 
 	return (
-		<div className='p-5 sm:hidden'>
+		<div className='p-5'>
 			<div className='object-cover h-[15rem] md:h-[20rem] lg:h-[22rem] m-auto relative group'>
 				<div
 					style={{ backgroundImage: `url(${slides[currentIndex].url})` }}

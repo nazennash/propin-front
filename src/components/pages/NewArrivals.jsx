@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../../components/pages/stores/Cart';
 
-export const Products = (props) => {
+export const NewArrivals = (props) => {
     const carts = useSelector(store => store.cart.items);
     console.log(carts)
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const Products = (props) => {
 
     const getProducts = async () => {
         try {
-            const url = `http://127.0.0.1:8000/products/products/?page=${currentPage}`;
+            const url = `http://127.0.0.1:8000/products/products/new_arrivals/?page=${currentPage}`;
             const response = await axios.get(url);
             setProducts(response.data.results);
         } catch (error) {
@@ -46,9 +46,9 @@ export const Products = (props) => {
     };
 
     return (
-        <div className="bg-white container mx-auto">
-            <div className="mx-auto px-4 py-10 sm:px-6 sm:py-15 ">
-                <h2><span className="text-2xl font-bold text-gray-900">Products |</span> Don't miss the current offers until the end of August </h2>
+        <div className="bg-white mx-auto container">
+            <div className="mx-auto  px-4 py-16 sm:px-6 sm:py-24">
+                <h2><span className="text-2xl font-bold text-gray-900">New Arrivals |</span> Don't miss this opporunity </h2>
                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8 m-3 sm:mx-0">
                     {products.map((product, index) => (
                         <div key={index} className="group relative border rounded-lg p-3">

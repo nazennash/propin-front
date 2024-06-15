@@ -7,6 +7,8 @@ import { AuthProvider } from "./components/Auth";
 import { Products } from "./components/pages/Products";
 import { Footer } from "./components/pages/Footer";
 import Cart from "./components/pages/Cart";
+import { Category } from "./components/pages/Category";
+import { Details } from "./components/pages/Details";
 
 function App() {
   return (
@@ -18,6 +20,9 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
         <Route path='products' element={<Products />} />
         <Route path='cart' element={<Cart />} />
+        <Route path='/category/:categoryId' element={<Category />} />
+        <Route path='/details/:productId' element={<Details />}
+        />
       </Routes>
       <Footer />
     </AuthProvider>

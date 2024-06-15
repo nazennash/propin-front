@@ -41,7 +41,7 @@ const Navbar = () => {
       <nav className="shadow-md bg-gray-50">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between relative">
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -84,9 +84,9 @@ const Navbar = () => {
               </button>
             </div>
 
-            <div className="flex items-center justify-center sm:items-stretch sm:justify-start px-10 sm:p-0">
+            <div className="flex items-center justify-center md:items-stretch md:justify-start px-10 md:p-0">
               <NavLink to="/" className="flex flex-shrink-0 items-center">
-                <span className="ml-3 text-[22px] font-bold text-gray-800">
+                <span className="ml-3  text-[22px] font-bold text-gray-800">
                   Pinacore
                 </span>
               </NavLink>
@@ -117,7 +117,7 @@ const Navbar = () => {
                 </button>
               </div>
             )}
-            <div className="hidden sm:ml-6 sm:block">
+            <div className="hidden md:ml-6 md:block">
               <div className="relative mt-2 rounded-md shadow-sm">
                 <input
                   type="text"
@@ -132,7 +132,7 @@ const Navbar = () => {
         </div>
 
         {/* dropdown on small screens */}
-        <div className={`sm:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
+        <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
             <MainCategory />
           </div>
