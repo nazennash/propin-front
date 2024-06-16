@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 
 export const MainCategoryList = () => {
     const [category, setMainCategory] = useState([]);
@@ -37,28 +38,31 @@ export const MainCategoryList = () => {
                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8 m-3 sm:mx-0">
                     {category.map((category, index) => (
                         <div key={index} className="group relative border rounded-lg p-3">
-                            <div className="object-cover w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
-                                <img
-                                    src={category.image}
-                                    alt={category.name}
-                                    className="items-center h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                />
-                            </div>
-                            <div className="mt-4 flex justify-between">
-                                <div>
-                                    <h3 className="text-md text-gray-700 font-bold">
-                                        <a href={category.href}>
-                                            <span aria-hidden="true" className="" />
-                                            {category.name}
-                                        </a>
-                                    </h3>
+                            <Link
+                                to={`/category/${category.id}/`}>
+                                <div className="object-cover w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
+                                    <img
+                                        src={category.image}
+                                        alt={category.name}
+                                        className="items-center h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                    />
                                 </div>
-                            </div>
+                                <div className="mt-4 flex justify-between">
+                                    <div>
+                                        <h3 className="text-md text-gray-700 font-bold">
+                                            <a href={category.href}>
+                                                <span aria-hidden="true" className="" />
+                                                {category.name}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
                     ))}
                 </div>
 
-            </div>
+            </div >
         </div >
     );
 };

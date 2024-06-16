@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 
 export const BrowseByCategory = (props) => {
     const [products, setProducts] = useState([]);
@@ -40,24 +41,25 @@ export const BrowseByCategory = (props) => {
                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8 m-3 sm:mx-0">
                     {products.map((product, index) => (
                         <div key={index} className="group relative border rounded-lg p-3">
-
-                            <div className="object-cover w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="items-center h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                />
-                            </div>
-                            <div className="mt-4 flex justify-between">
-                                <div className='align-center'>
-                                    <h3 className="text-md text-gray-700 font-bold">
-                                        <a href={product.href}>
-                                            <span aria-hidden="true" className="" />
-                                            {product.name}
-                                        </a>
-                                    </h3>
+                            <Link to={`/category/${category.id}/`}>
+                                <div className="object-cover w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="items-center h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                    />
                                 </div>
-                            </div>
+                                <div className="mt-4 flex justify-between">
+                                    <div className='align-center'>
+                                        <h3 className="text-md text-gray-700 font-bold">
+                                            <a href={product.href}>
+                                                <span aria-hidden="true" className="" />
+                                                {product.name}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -77,6 +79,6 @@ export const BrowseByCategory = (props) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };

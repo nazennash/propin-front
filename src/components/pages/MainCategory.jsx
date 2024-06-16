@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-export const MainCategory = () => {
+export const MainCategory = ({ toggleMobileMenu }) => {
     const [mainCategories, setMainCategories] = useState([]);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // Initialize with false
 
     useEffect(() => {
         getMainCategories();
@@ -16,13 +15,8 @@ export const MainCategory = () => {
             const response = await axios.get(url);
             setMainCategories(response.data);
         } catch (error) {
-            console.error('Error fetching categories:', error.message);
+            console.error("Error fetching categories:", error.message);
         }
-    };
-
-    const handleCategoryClick = () => {
-        setMobileMenuOpen(!mobileMenuOpen);
-        // setMobileMenuOpen(false);
     };
 
     return (
@@ -36,9 +30,8 @@ export const MainCategory = () => {
                         <li key={index} className="relative border-b p-3 m-0.5">
                             <Link
                                 to={`/category/${category.id}/`}
-                                onClick={handleCategoryClick}
+                                onClick={() => toggleMobileMenu()}
                                 aria-controls="mobile-menu"
-                                aria-expanded={mobileMenuOpen}
                             >
                                 {category.name}
                             </Link>

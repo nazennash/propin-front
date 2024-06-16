@@ -10,14 +10,17 @@ export const Register = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const navigate = useNavigate()
   const location = useLocation();
 
-  const redirectPath = location.state?.path || '/';
+  const redirectPath = location.state?.from?.pathname || '/';
+  console.log(redirectPath)
 
 
   const [user, setUser] = useState('');
   const auth = useAuth();
-  const navigate = useNavigate()
+
 
 
   const requestOtp = async () => {

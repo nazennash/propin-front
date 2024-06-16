@@ -5,21 +5,21 @@ import axios from "axios";
 import { MainCategory } from "./MainCategory";
 
 const Navbar = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem("authToken");
 
       if (!token) {
         console.error("No token found");
         return;
       }
 
-      localStorage.removeItem('authToken');
-      localStorage.clear()
+      localStorage.removeItem("authToken");
+      localStorage.clear();
 
       await axios.post("http://127.0.0.1:8000/users/logout/", {}, {
         headers: {
@@ -36,6 +36,10 @@ const Navbar = () => {
     }
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <div>
       <nav className="shadow-md bg-gray-50">
@@ -44,14 +48,12 @@ const Navbar = () => {
             <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
               <button
                 type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={toggleMobileMenu}
                 className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-[#24C6DC] hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-600"
                 aria-controls="mobile-menu"
                 aria-expanded={mobileMenuOpen}
               >
-
                 <span className="absolute -inset-0.5"></span>
-
                 <svg
                   className="block h-6 w-6"
                   fill="none"
@@ -66,7 +68,6 @@ const Navbar = () => {
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                   />
                 </svg>
-
                 <svg
                   className="hidden h-6 w-6"
                   fill="none"
@@ -86,7 +87,7 @@ const Navbar = () => {
 
             <div className="flex items-center justify-center md:items-stretch md:justify-start px-10 md:p-0">
               <NavLink to="/" className="flex flex-shrink-0 items-center">
-                <span className="ml-3  text-[22px] font-bold text-gray-800">
+                <span className="ml-3 text-[22px] font-bold text-gray-800">
                   Pinacore
                 </span>
               </NavLink>
@@ -131,10 +132,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* dropdown on small screens */}
-        <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`} id="mobile-menu">
+        <div className={`md:hidden ${mobileMenuOpen ? "block" : "hidden"}`} id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
-            <MainCategory />
+            <MainCategory toggleMobileMenu={toggleMobileMenu} />
           </div>
         </div>
       </nav>

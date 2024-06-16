@@ -1,12 +1,15 @@
-// Cart.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, addQuantity, minusQuantity, fetchCartItems } from '../../components/pages/stores/Cart';
 import gif from '../../assets/thank_you.gif';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
+import { useAuth } from '../Auth';
+import axios from 'axios';
 
 const Cart = () => {
+	const auth = useAuth()
+
 	const [showModal, setShowModal] = useState(false);
 	const carts = useSelector(store => store.cart.items);
 	console.log(carts)
@@ -29,13 +32,50 @@ const Cart = () => {
 		dispatch(removeItem(itemId));
 	};
 
-	const buyNow = () => {
-		setShowModal(true);
+	const buyNow = async () => {
+		try {
+			const token = localStorage.getItem('authToken');
+			const phoneNumber = localStorage.getItem('phoneNumber');
+			// const phoneNumber = '0797382426';
+			const price = parseInt(totalAmount);
+
+			console.log(phoneNumber)
+			console.log(token)
+
+
+			const response = await axios.post(
+				`http://127.0.0.1:8000/products/payment/`,
+				{
+					price,
+					phone_number: phoneNumber,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Token ${token}`,
+					},
+				}
+			);
+
+			console.log("nash")
+
+			if (response.status === 201) {
+				console.log('Payment successful');
+				setShowModal(true);
+			} else {
+				console.error('Failed to process payment');
+				setShowModal(true);
+			}
+
+		} catch (error) {
+			console.error('Error processing payment:', error.message);
+		}
 	};
 
 	const subtotal = carts.reduce((acc, item) => acc + item.price * item.quantity, 0);
 	const shippingAmount = 5.00;
-	const totalAmount = subtotal + shippingAmount;
+	const delivery = 130
+	const totalAmount = subtotal + shippingAmount + delivery;
 
 	return (
 		<div className='lg:container mx-auto p-5'>
@@ -48,7 +88,7 @@ const Cart = () => {
 				<div className='fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75'>
 					<div className='bg-white p-8 rounded-lg'>
 						<h2 className='text-2xl font-bold mb-4'>Success!</h2>
-						<img src={gif} alt='' />
+						<img src={gif} alt='' width={300} />
 						<p>Check your phone for payment prompt.</p>
 						<p>Bridging the digital divide</p>
 						<button
@@ -139,37 +179,52 @@ const Cart = () => {
 								<small className='font-bold text-[15px]'>
 									SubTotal
 								</small>
-								<small>${subtotal.toFixed(2)}</small>
+								<small>Kshs. {subtotal.toFixed(2)}</small>
 							</div>
 							<hr />
 							<div className='flex justify-between p-3'>
 								<small className='font-bold text-[15px] text-red-600'>
 									Shipping
 								</small>
-								<small>${shippingAmount.toFixed(2)}</small>
+								<small>Kshs. {shippingAmount.toFixed(2)}</small>
 							</div>
 							<hr />
+							<br />
+							<div className='flex justify-between p-3'>
+								<small className='font-bold text-[15px]'>
+									Choose delivery point
+								</small>
+								<small>130</small>
+							</div>
+
 							<div className='flex justify-between p-3'>
 								<small className='font-bold text-[15px]'>
 									Total
 								</small>
-								<small>${totalAmount.toFixed(2)}</small>
+								<small className='font-bold underline text-red-600'>Kshs. {totalAmount.toFixed(2)}</small>
 							</div>
 							<br />
-							<div className='p-3'>
-								<Link
-									to='#'
-									className='bg-blue-700  text-white text-sm font-semibold rounded-md p-3 hover:bg-gray-800 focus:outline-none ml-auto'
-									onClick={buyNow}
-								>
-									Checkout
-								</Link>
-							</div>
+							{!auth.user ? (
+								<div className='text-center text-red-500'>
+									<span>Please <Link to="/register" className='hover:text-blue-600' state={{ from: location }}>login</Link> to proceed</span>
+								</div>
+							) : (
+								<div className='p-3'>
+									<button
+										onClick={() => buyNow()}
+										className='bg-blue-700  text-white text-sm font-semibold rounded-md p-3 hover:bg-gray-800 focus:outline-none ml-auto'
+									>
+										Checkout
+									</button>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</div >
+			<br />
+			<br />
+		</div >
 	);
 };
 

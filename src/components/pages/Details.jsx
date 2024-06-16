@@ -4,8 +4,10 @@ import axios from 'axios';
 import { Heart } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../components/pages/stores/Cart';
+import gif from '../../assets/thank_you.gif';
 
 export const Details = () => {
+	const [showModal, setShowModal] = useState(false);
 	const { productId } = useParams();
 	const [productData, setProductData] = useState({});
 	const dispatch = useDispatch();
@@ -37,30 +39,39 @@ export const Details = () => {
 
 	const buyNow = async () => {
 		try {
-			const token = localStorage.getItem('token');
-			const phoneNumber = '0797382426';
-			const price = parseInt(productData.discounted_price);
+			const token = localStorage.getItem('authToken');
+			const phoneNumber = localStorage.getItem('phoneNumber');
+			const price = parseInt(productData.discounted_price)
 
-			if (token) {
-				const response = await axios.post(
-					`https://whale-app-tlndf.ondigitalocean.app/api/payment/`,
-					{
-						price,
-						phone_number: phoneNumber,
+			console.log(phoneNumber)
+			console.log(token)
+			console.log(productData.discounted_price)
+
+
+			const response = await axios.post(
+				`http://127.0.0.1:8000/products/payment/`,
+				{
+					price,
+					phone_number: phoneNumber,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Token ${token}`,
 					},
-					{
-						headers: {
-							Authorization: `Token ${token}`,
-						},
-					}
-				);
-
-				if (response.status === 201) {
-					console.log('Payment successful');
-				} else {
-					console.error('Failed to process payment');
 				}
+			);
+
+			console.log("nash")
+
+			if (response.status === 201) {
+				console.log('Payment successful');
+				setShowModal(true);
+			} else {
+				console.error('Failed to process payment');
+				setShowModal(true);
 			}
+
 		} catch (error) {
 			console.error('Error processing payment:', error.message);
 		}
@@ -68,6 +79,22 @@ export const Details = () => {
 
 	return (
 		<div className='container mx-auto lg:p-10'>
+			{showModal && (
+				<div className='fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75'>
+					<div className='bg-white p-8 rounded-lg'>
+						<h2 className='text-2xl font-bold mb-4'>Success!</h2>
+						<img src={gif} alt='' width={300} />
+						<p>Thank you for buying {productData.brand}</p>
+						<p>Bridging the digital divide</p>
+						<button
+							className='mt-4 bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none'
+							onClick={() => setShowModal(false)}
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			)}
 			<div className='grid lg:grid-cols-10 border grid-cols-2 mt-10'>
 				<div className='col-span-4 lg:m-auto mx-auto mt-10'>
 					<img
@@ -113,13 +140,13 @@ export const Details = () => {
 						</div>
 						<br />
 						<div className='flex text-center'>
-							<Link
-								to='#'
+							<button
+								onClick={() => buyNow()}
 								className='bg-green-700 p-2 rounded-md text-[14px] text-white mr-4'
-								onClick={buyNow}
 							>
+
 								Buy Now
-							</Link>
+							</button>
 							<button
 								onClick={handleAddToCart}
 								className='bg-blue-500 p-2 rounded-md text-[14px] text-white hover:text-blue-800'

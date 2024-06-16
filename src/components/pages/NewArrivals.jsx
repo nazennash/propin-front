@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../../components/pages/stores/Cart';
+import { Link } from 'react-router-dom';
 
 export const NewArrivals = (props) => {
     const carts = useSelector(store => store.cart.items);
@@ -60,20 +61,23 @@ export const NewArrivals = (props) => {
 
                                 <span className="mt-1 text-sm text-gray-500">{product.color}</span>
                             </div>
-                            <div className="object-cover w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="items-center h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                />
-                            </div>
+                            <Link
+                                to={`/details/${product.id}/`}>
+                                <div className="object-cover w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="items-center h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                    />
+                                </div>
+                            </Link>
                             <div className="mt-4 flex justify-between">
                                 <div>
                                     <h3 className="text-md text-gray-700 font-bold">
-                                        <a href={product.href}>
+                                        <Link to={`/details/${product.id}/`}>
                                             <span aria-hidden="true" className="" />
                                             {product.name}
-                                        </a>
+                                        </Link>
                                     </h3>
                                     <button onClick={() => handleAddToCart(product)} className="bg-gray-300 px-2 py-1 tracking-tight rounded-md mt-1 text-sm text-gray-500 hover:text-blue-500">Add to Cart</button>
                                 </div>
