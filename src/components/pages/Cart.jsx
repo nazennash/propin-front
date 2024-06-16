@@ -36,7 +36,6 @@ const Cart = () => {
 		try {
 			const token = localStorage.getItem('authToken');
 			const phoneNumber = localStorage.getItem('phoneNumber');
-			// const phoneNumber = '0797382426';
 			const price = parseInt(totalAmount);
 
 			console.log(phoneNumber)
@@ -206,7 +205,7 @@ const Cart = () => {
 							<br />
 							{!auth.user ? (
 								<div className='text-center text-red-500'>
-									<span>Please <Link to="/register" className='hover:text-blue-600' state={{ from: location }}>login</Link> to proceed</span>
+									<span>Please <Link to="/register" className='hover:text-blue-600' >login</Link> to proceed</span>
 								</div>
 							) : (
 								<div className='p-3'>
