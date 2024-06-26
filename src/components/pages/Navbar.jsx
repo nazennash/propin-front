@@ -25,7 +25,7 @@ const Navbar = () => {
       localStorage.removeItem("authToken");
       localStorage.clear();
 
-      await axios.post("http://127.0.0.1:8000/users/logout/", {}, {
+      await axios.post("http://198.211.106.68/users/logout/", {}, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

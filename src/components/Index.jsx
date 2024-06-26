@@ -26,17 +26,17 @@ export const Index = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/products/products/search/`, {
+      const response = await axios.get(`http://198.211.106.68/products/products/search/`, {
         params: { search: searchQuery }
       });
       setSearchResults(response.data.results);
-      setShowDropdown(true); // Always show dropdown after search results are fetched
+      setShowDropdown(true);
       setShowNote(response.data.results.length === 0); // Show note if no results are found
     } catch (error) {
       console.error('Error fetching search results:', error);
       setSearchResults([]);
-      setShowDropdown(false); // Hide dropdown if there are no results or error
-      setShowNote(true); // Show note on error
+      setShowDropdown(false);
+      setShowNote(true);
     }
   };
 
@@ -47,7 +47,7 @@ export const Index = () => {
   };
 
   const closeDropdown = () => {
-    setShowDropdown(false); // Function to close dropdown
+    setShowDropdown(false);
   };
 
   return (

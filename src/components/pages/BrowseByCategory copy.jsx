@@ -15,7 +15,7 @@ export const BrowseByCategory = (props) => {
 
     const getProducts = async () => {
         try {
-            const url = `http://127.0.0.1:8000/products/main_category/?page=${currentPage}`;
+            const url = `http://198.211.106.68//products/main_category/?page=${currentPage}`;
             const response = await axios.get(url);
             setProducts(response.data.results);
         } catch (error) {
