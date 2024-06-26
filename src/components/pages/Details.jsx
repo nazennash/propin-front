@@ -15,7 +15,7 @@ export const Details = () => {
 	useEffect(() => {
 		const getProductData = async () => {
 			try {
-				const url = `//198.211.106.68/products/products/${productId}/`;
+				const url = `http://198.211.106.68/products/products/${productId}/`;
 				const response = await axios.get(url);
 				setProductData(response.data);
 			} catch (error) {

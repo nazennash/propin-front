@@ -43,7 +43,7 @@ const Cart = () => {
 
 
 			const response = await axios.post(
-				`//198.211.106.68/products/payment/`,
+				`http://198.211.106.68/products/payment/`,
 				{
 					price,
 					phone_number: phoneNumber,
