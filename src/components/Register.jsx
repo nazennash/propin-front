@@ -80,7 +80,7 @@ export const Register = () => {
     setLoading(true);
     setError('');
     try {
-      await axios.post('http://127.0.0.1:8000/users/register/', { phone_number: phoneNumber, name: name });
+      await axios.post('https://pinacore-rnlyj.ondigitalocean.app/users/register/', { phone_number: phoneNumber, name: name });
       alert('Registered');
     } catch (err) {
       setError('Failed to register');
