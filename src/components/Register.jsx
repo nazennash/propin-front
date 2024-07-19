@@ -44,7 +44,7 @@ export const Register = () => {
 
     try {
       const response = await axios.patch(
-        'http://127.0.0.1:8000/users/verify-otp/',
+        'https://pinacore-rnlyj.ondigitalocean.app/users/verify-otp/',
         { phone_number: phoneNumber, otp: otp }
       );
 
