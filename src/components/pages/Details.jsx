@@ -15,7 +15,7 @@ export const Details = () => {
 	useEffect(() => {
 		const getProductData = async () => {
 			try {
-				const url = `http://198.211.106.68/products/products/${productId}/`;
+				const url = `https://pinacore-rnlyj.ondigitalocean.app/products/products/${productId}/`;
 				const response = await axios.get(url);
 				setProductData(response.data);
 			} catch (error) {
@@ -49,7 +49,7 @@ export const Details = () => {
 
 
 			const response = await axios.post(
-				`//198.211.106.68/products/payment/`,
+				`https://pinacore-rnlyj.ondigitalocean.app/products/payment/`,
 				{
 					price,
 					phone_number: phoneNumber,

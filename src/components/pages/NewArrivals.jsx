@@ -19,7 +19,7 @@ export const NewArrivals = (props) => {
 
     const getProducts = async () => {
         try {
-            const url = `http://198.211.106.68/products/products/new_arrivals/?page=${currentPage}`;
+            const url = `https://pinacore-rnlyj.ondigitalocean.app/products/products/new_arrivals/?page=${currentPage}`;
             const response = await axios.get(url);
             setProducts(response.data.results);
         } catch (error) {

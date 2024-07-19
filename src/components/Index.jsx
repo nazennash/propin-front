@@ -26,7 +26,7 @@ export const Index = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.get(`http://198.211.106.68/products/products/search/`, {
+      const response = await axios.get(`https://pinacore-rnlyj.ondigitalocean.app/products/search/`, {
         params: { search: searchQuery }
       });
       setSearchResults(response.data.results);

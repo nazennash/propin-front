@@ -13,7 +13,7 @@ export const Products = () => {
 
     const getProducts = async () => {
         try {
-            const url = `//198.211.106.68/products/products/?page=${currentPage}`;
+            const url = `https://pinacore-rnlyj.ondigitalocean.app/products/products/?page=${currentPage}`;
             const response = await axios.get(url);
             setProducts(response.data.results);
         } catch (error) {

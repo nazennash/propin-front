@@ -24,7 +24,7 @@ export const Category = () => {
 		setIsLoading(true);
 		setError(null);
 		try {
-			const url = `http://198.211.106.68/products/products/main_category/${mainCategoryId}/?page=${page}`;
+			const url = `https://pinacore-rnlyj.ondigitalocean.app/products/products/main_category/${mainCategoryId}/?page=${page}`;
 			const response = await axios.get(url);
 			const data = response.data;
 			if (data && data.results) {

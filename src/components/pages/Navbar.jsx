@@ -25,7 +25,7 @@ const Navbar = () => {
       localStorage.removeItem("authToken");
       localStorage.clear();
 
-      await axios.post("http://198.211.106.68/users/logout/", {}, {
+      await axios.post("https://pinacore-rnlyj.ondigitalocean.app/users/logout/", {}, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ const Navbar = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.get(`//198.211.106.68/products/products/search/`, {
+      const response = await axios.get(`https://pinacore-rnlyj.ondigitalocean.app/products/products/search/`, {
         params: { search: searchQuery }
       });
       setSearchResults(response.data.results);

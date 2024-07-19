@@ -11,7 +11,7 @@ export const MainCategory = ({ toggleMobileMenu }) => {
 
     const getMainCategories = async () => {
         try {
-            const url = `http://198.211.106.68/products/main_category/`;
+            const url = `https://pinacore-rnlyj.ondigitalocean.app/products/main_category/`;
             const response = await axios.get(url);
             setMainCategories(response.data);
         } catch (error) {

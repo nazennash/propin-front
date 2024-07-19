@@ -27,7 +27,7 @@ export const Register = () => {
     setLoading(true);
     setError('');
     try {
-      await axios.post('http://198.211.106.68/users/request-otp/', { phone_number: phoneNumber });
+      await axios.post('https://pinacore-rnlyj.ondigitalocean.app/users/request-otp/', { phone_number: phoneNumber });
       setView('verifyOTP');
       setError('OTP sent successfully');
     } catch (err) {
