@@ -85,8 +85,9 @@ export const Register = () => {
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('User already exists');
+      } else {
+        setError('Failed to register');
       }
-      setError('Failed to register');
     } finally {
       setLoading(false);
     }
