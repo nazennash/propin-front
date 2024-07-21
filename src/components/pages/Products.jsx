@@ -78,7 +78,7 @@ export const Products = (props) => {
                                             {product.name}
                                         </Link>
                                     </h3>
-                                    <button onClick={() => handleAddToCart(product)} className="bg-blue-500 px-2 py-1 tracking-tight rounded-md mt-1 text-sm text-gray-500 hover:text-blue-500">Add to Cart</button>
+                                    <button onClick={() => handleAddToCart(product)} className="bg-blue-500 px-2 py-1 tracking-tight rounded-md mt-1 text-sm text-white font-semibold sm:hover:text-blue-500">Add to Cart</button>
                                 </div>
                                 <p className="text-sm font-medium text-gray-900">{product.price}</p>
                             </div>
