@@ -142,7 +142,7 @@ export const Details = () => {
 						</div>
 						<br />
 						{!auth.user && (
-							<div className='text-center text-red-500'>
+							<div className='text-center text-red-500 mb-2'>
 								<span>Please <Link to="/register" className='hover:text-blue-600' >login</Link> to buy now</span>
 							</div>
 						)}
