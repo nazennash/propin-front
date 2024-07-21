@@ -30,7 +30,7 @@ export const MainCategory = ({ toggleMobileMenu }) => {
                     {mainCategories.map(({ id, name }) => (
                         <li key={id} className="relative border-b p-3 m-0.5">
                             <NavLink
-                                to={`/category/${id}/`}
+                                to={`category/${id}/`}
                                 onClick={() => toggleMobileMenu()}
                                 aria-controls="mobile-menu"
                             >
