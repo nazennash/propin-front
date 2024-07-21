@@ -28,13 +28,13 @@ export const MainCategory = ({ toggleMobileMenu }) => {
                 <div className='max-h-80 overflow-y-auto'>
                     {mainCategories.map((category, index) => (
                         <li key={index} className="relative border-b p-3 m-0.5">
-                            <NavLink
-                                to={`/category/${category.id}/`}
+                            <Link
+                                to={`category/${category.id}/`}
                                 onClick={() => toggleMobileMenu()}
                                 aria-controls="mobile-menu"
                             >
                                 {category.name}
-                            </NavLink>
+                            </Link>
                         </li>
                     ))}
                 </div>
