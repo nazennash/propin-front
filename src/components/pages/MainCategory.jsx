@@ -14,31 +14,32 @@ export const MainCategory = ({ toggleMobileMenu }) => {
             const url = `https://pinacore-rnlyj.ondigitalocean.app/products/main_category/`;
             const response = await axios.get(url);
             setMainCategories(response.data);
+            console.log(response.data);
         } catch (error) {
             console.error("Error fetching categories:", error.message);
         }
     };
 
     return (
-        <div className="bg-white">
+        <nav className="bg-white">
             <ul>
-                <li className='hidden md:block bg-blue-500 text-white p-3 font-bold rounded-t-lg'>
+                <li className="hidden md:block bg-blue-500 text-white p-3 font-bold rounded-t-lg">
                     All Categories
                 </li>
-                <div className='max-h-80 overflow-y-auto'>
-                    {mainCategories.map((category, index) => (
-                        <li key={index} className="relative border-b p-3 m-0.5">
+                <div className="max-h-80 overflow-y-auto">
+                    {mainCategories.map(({ id, name }) => (
+                        <li key={id} className="relative border-b p-3 m-0.5">
                             <Link
-                                to={`/category/${category.id}/`}
+                                to={`/category/${id}/`}
                                 onClick={() => toggleMobileMenu()}
                                 aria-controls="mobile-menu"
                             >
-                                {category.name}
+                                {name}
                             </Link>
                         </li>
                     ))}
                 </div>
             </ul>
-        </div>
+        </nav>
     );
 };
