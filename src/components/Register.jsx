@@ -101,7 +101,7 @@ export const Register = () => {
               <input
                 className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                 type="text"
-                placeholder="Enter Phone number"
+                placeholder="+254XXXXXXXXX"
                 aria-label="Phone number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -163,7 +163,7 @@ export const Register = () => {
               <input
                 className="appearance-none bg-transparent border-b w-full text-gray-700 mb-3 py-1 px-2 leading-tight focus:outline-none"
                 type="text"
-                placeholder="Enter Phone number"
+                placeholder="+254XXXXXXXXX"
                 aria-label="Phone number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
