@@ -63,7 +63,7 @@ export const NewArrivals = (props) => {
                             </div>
                             <Link
                                 to={`/details/${product.id}/`}>
-                                <div className="object-cover w-[100px] h-[100px] md:w-[150px] md:h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
+                                <div className="object-cover w-[120px] h-[120px] md:w-[150px] md:h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
                                     <img
                                         src={product.image}
                                         alt={product.name}
