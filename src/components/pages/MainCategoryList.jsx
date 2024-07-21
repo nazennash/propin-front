@@ -40,7 +40,7 @@ export const MainCategoryList = () => {
                         <div key={index} className="group relative border rounded-lg p-3">
                             <Link
                                 to={`/category/${category.id}/`}>
-                                <div className="object-cover w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
+                                <div className="object-cover w-[120px] h-[120px] md:w-[150px] md:h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75">
                                     <img
                                         src={category.image}
                                         alt={category.name}

@@ -160,7 +160,7 @@ export const Category = () => {
 								key={index}
 							>
 								<div className='lg:col-span-3 col-span-12 lg:mt-5'>
-									<div className="flex object-cover object-center w-[120px] h-[120px] md:w-[150px] md:h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75">
+									<div className="flex object-cover object-center w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75">
 										<img
 											src={product.image}
 											alt={product.name}

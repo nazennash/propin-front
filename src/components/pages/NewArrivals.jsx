@@ -48,7 +48,7 @@ export const NewArrivals = (props) => {
 
     return (
         <div className="bg-white mx-auto container">
-            <div className="mx-auto  px-4 py-16 sm:px-6 sm:py-24">
+            <div className="mx-auto  px-4 py-10 sm:px-6 sm:py-24">
                 <h2><span className="text-2xl font-bold text-gray-900">New Arrivals |</span> Don't miss this opporunity </h2>
                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8 m-3 sm:mx-0">
                     {products.map((product, index) => (
@@ -79,7 +79,7 @@ export const NewArrivals = (props) => {
                                             {product.name}
                                         </Link>
                                     </h3>
-                                    <button onClick={() => handleAddToCart(product)} className="bg-gray-300 px-2 py-1 tracking-tight rounded-md mt-1 text-sm text-gray-500 hover:text-blue-500">Add to Cart</button>
+                                    <button onClick={() => handleAddToCart(product)} className="bg-blue-500 px-2 py-1 tracking-tight rounded-md mt-1 text-sm text-gray-500 hover:text-blue-500">Add to Cart</button>
                                 </div>
                                 <p className="text-sm font-medium text-gray-900">{product.price}</p>
                             </div>
