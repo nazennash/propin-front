@@ -83,6 +83,9 @@ export const Register = () => {
       await axios.post('https://pinacore-rnlyj.ondigitalocean.app/users/register/', { phone_number: phoneNumber, name: name });
       alert('Registered');
     } catch (err) {
+      if (err.response && err.response.status === 401) {
+        setError('User already exists');
+      }
       setError('Failed to register');
     } finally {
       setLoading(false);
