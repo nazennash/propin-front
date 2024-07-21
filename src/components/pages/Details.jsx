@@ -5,12 +5,14 @@ import { Heart } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../components/pages/stores/Cart';
 import gif from '../../assets/thank_you.gif';
+import { useAuth } from '../Auth';
 
 export const Details = () => {
 	const [showModal, setShowModal] = useState(false);
 	const { productId } = useParams();
 	const [productData, setProductData] = useState({});
 	const dispatch = useDispatch();
+	const auth = useAuth()
 
 	useEffect(() => {
 		const getProductData = async () => {
@@ -139,7 +141,13 @@ export const Details = () => {
 							<span>- Save for later</span>
 						</div>
 						<br />
+						{!auth.user && (
+							<div className='text-center text-red-500'>
+								<span>Please <Link to="/register" className='hover:text-blue-600' >login</Link> to buy now</span>
+							</div>
+						)}
 						<div className='flex text-center'>
+
 							<button
 								onClick={() => buyNow()}
 								className='bg-green-700 p-2 rounded-md text-[14px] text-white mr-4'
@@ -147,6 +155,7 @@ export const Details = () => {
 
 								Buy Now
 							</button>
+
 							<button
 								onClick={handleAddToCart}
 								className='bg-blue-500 p-2 rounded-md text-[14px] text-white hover:text-blue-800'
@@ -159,6 +168,6 @@ export const Details = () => {
 			</div>
 			<br />
 			<br />
-		</div>
+		</div >
 	);
 };
