@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const MainCategory = ({ toggleMobileMenu }) => {
     const [mainCategories, setMainCategories] = useState([]);
@@ -29,13 +29,13 @@ export const MainCategory = ({ toggleMobileMenu }) => {
                 <div className="max-h-80 overflow-y-auto">
                     {mainCategories.map(({ id, name }) => (
                         <li key={id} className="relative border-b p-3 m-0.5">
-                            <Link
+                            <NavLink
                                 to={`/category/${id}/`}
                                 onClick={() => toggleMobileMenu()}
                                 aria-controls="mobile-menu"
                             >
                                 {name}
-                            </Link>
+                            </NavLink>
                         </li>
                     ))}
                 </div>
