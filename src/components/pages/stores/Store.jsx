@@ -14,8 +14,11 @@ export const store = configureStore({
     reducer: {
         cart: persistedCartReducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: {
+            ignoredActions: ['persist/PERSIST'],
+        },
+    }),
 });
 
 export const persistor = persistStore(store);
-
-export default store;

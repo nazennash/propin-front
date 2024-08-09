@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "./Auth";
 import { Products } from "./pages/Products";
 import { SlideShow } from "./pages/SlideShow";
@@ -6,7 +6,7 @@ import { FirstInfo } from "./pages/FirstInfo";
 import { NewArrivals } from "./pages/NewArrivals";
 import { MainCategoryList } from "./pages/MainCategoryList";
 import { MainCategory } from "./pages/MainCategory";
-import axios from "axios";
+import { axiosInstance } from '../apiconfig.jsx';
 import { NavLink } from "react-router-dom";
 
 export const Index = () => {
@@ -14,24 +14,24 @@ export const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showNote, setShowNote] = useState(false); // State to control note visibility
+  const [showNote, setShowNote] = useState(false);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    setShowDropdown(true); // Show dropdown when user starts typing
-    setShowNote(false); // Hide note when user starts typing
+    setShowDropdown(true);
+    setShowNote(false);
   };
 
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.get(`https://pinacore-rnlyj.ondigitalocean.app/products/search/`, {
+      const response = await axiosInstance.get(`/products/search/`, {
         params: { search: searchQuery }
       });
       setSearchResults(response.data.results);
       setShowDropdown(true);
-      setShowNote(response.data.results.length === 0); // Show note if no results are found
+      setShowNote(response.data.results.length === 0);
     } catch (error) {
       console.error('Error fetching search results:', error);
       setSearchResults([]);
@@ -44,10 +44,6 @@ export const Index = () => {
     if (event.key === 'Enter') {
       handleSearchSubmit(event);
     }
-  };
-
-  const closeDropdown = () => {
-    setShowDropdown(false);
   };
 
   return (
@@ -64,7 +60,7 @@ export const Index = () => {
                     id="search-item"
                     value={searchQuery}
                     onChange={handleSearchChange}
-                    onKeyDown={handleKeyDown} // Handle Enter key press
+                    onKeyDown={handleKeyDown}
                     className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="Search..."
                   />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./Auth";
+import { axiosInstance } from "../apiconfig.jsx"; // Import the axiosInstance
 
 export const Register = () => {
   const [view, setView] = useState('requestOTP');
@@ -11,23 +11,17 @@ export const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
-
   const redirectPath = location.state?.from?.pathname || '/';
-  console.log(redirectPath)
 
-
-  const [user, setUser] = useState('');
   const auth = useAuth();
-
-
 
   const requestOtp = async () => {
     setLoading(true);
     setError('');
     try {
-      await axios.post('https://pinacore-rnlyj.ondigitalocean.app/users/request-otp/', { phone_number: phoneNumber });
+      await axiosInstance.post('users/request-otp/', { phone_number: phoneNumber });
       setView('verifyOTP');
       setError('OTP sent successfully');
     } catch (err) {
@@ -43,17 +37,15 @@ export const Register = () => {
     setError('');
 
     try {
-      const response = await axios.patch(
-        'https://pinacore-rnlyj.ondigitalocean.app/users/verify-otp/',
+      const response = await axiosInstance.patch(
+        'users/verify-otp/',
         { phone_number: phoneNumber, otp: otp }
       );
 
       const token = response.data.access;
       const refresh = response.data.refresh;
-      const phone_number = response.data.phone_number
+      const phone_number = response.data.phone_number;
       const name = response.data.name;
-
-
 
       localStorage.setItem('authToken', token);
       localStorage.setItem('refreshToken', refresh);
@@ -61,11 +53,9 @@ export const Register = () => {
       localStorage.setItem('name', name);
 
       if (response.status === 200) {
-        auth.login(user);
+        auth.login({ name, phone_number });
         navigate(redirectPath, { replace: true });
-        window.location.reload();
       }
-
     } catch (err) {
       console.error('Error verifying OTP:', err);
       setError('Failed to verify OTP');
@@ -74,14 +64,13 @@ export const Register = () => {
     }
   };
 
-
-
   const registerUser = async () => {
     setLoading(true);
     setError('');
     try {
-      await axios.post('https://pinacore-rnlyj.ondigitalocean.app/users/register/', { phone_number: phoneNumber, name: name });
-      alert('Registered');
+      await axiosInstance.post('users/register/', { phone_number: phoneNumber, name: name });
+      alert('Registered successfully');
+      setView('requestOTP');  // Go back to request OTP view
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('User already exists');
@@ -152,7 +141,7 @@ export const Register = () => {
           </form>
           {error && <div className="mt-4 text-red-500">{error}</div>}
           <div className="mt-4">
-            message that otp is sent
+            <span>OTP sent successfully.</span>
           </div>
         </div>
       )}

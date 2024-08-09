@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import { axiosInstance } from '../../apiconfig.jsx'; // Use axiosInstance
 
 export const Category = () => {
 	const { categoryId } = useParams();
-
 	const [categoryProducts, setCategoryProducts] = useState([]);
 	const [uniqueSubCategories, setUniqueSubCategories] = useState([]);
 	const [uniqueSubTypeCategories, setUniqueSubTypeCategories] = useState([]);
@@ -24,9 +23,11 @@ export const Category = () => {
 		setIsLoading(true);
 		setError(null);
 		try {
-			const url = `https://pinacore-rnlyj.ondigitalocean.app/products/products/main_category/${mainCategoryId}/?page=${page}`;
-			const response = await axios.get(url);
+			const response = await axiosInstance.get(`/products/products/main_category/${mainCategoryId}/`, {
+				params: { page },
+			});
 			const data = response.data;
+
 			if (data && data.results) {
 				setCategoryProducts(data.results);
 				setTotalPages(Math.ceil(data.count / data.page_size));
@@ -47,10 +48,12 @@ export const Category = () => {
 				setUniqueSubTypeCategories(Array.from(subTypeCategories));
 				setUniqueCategories(Array.from(categories));
 				setUniqueBrands(Array.from(brands));
+			} else {
+				console.error('Unexpected data structure:', data);
 			}
 		} catch (error) {
 			setError('Error fetching category products');
-			console.error('Error fetching category products:', error);
+			console.error('Error fetching category products:', error.message);
 		} finally {
 			setIsLoading(false);
 		}
@@ -69,14 +72,14 @@ export const Category = () => {
 	};
 
 	return (
-		<div className='container mx-auto '>
+		<div className='container mx-auto'>
 			<div className='p-5 w-1/2 mx-auto'>
-				<div className="md:hidden mx-auto ">
+				<div className="md:hidden mx-auto">
 					<div className="relative mt-2 rounded-md shadow-sm">
 						<input
 							type="text"
-							name="price"
-							id="price"
+							name="search"
+							id="search"
 							className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#24C6DC] sm:text-sm sm:leading-6"
 							placeholder="Search..."
 						/>
@@ -84,16 +87,16 @@ export const Category = () => {
 				</div>
 			</div>
 			<div className='grid lg:grid-cols-12 gap-5'>
-				<div className='lg:col-span-2 lg:grid hidden lg:block'>
+				<div className='lg:col-span-2 hidden lg:block'>
 					<div className='mb-3'>
 						<div className='bg-blue-500 p-3 text-[16px] font-bold text-white rounded-t-lg mb-3'>
-							<Link to='#' className='bg-blue-500' aria-current='true'>
+							<Link to='#' className='bg-blue-500'>
 								Main Categories
 							</Link>
 						</div>
 						<div className='px-2 text-[16px] font-bold rounded-t-lg mb-3'>
 							{uniqueSubCategories.map((category, index) => (
-								<Link key={index} to='#' className=''>
+								<Link key={index} to='#'>
 									{category}
 								</Link>
 							))}
@@ -102,13 +105,13 @@ export const Category = () => {
 
 					<div className='mb-3'>
 						<div className='bg-blue-500 p-3 text-[16px] font-bold text-white rounded-t-lg mb-3'>
-							<Link to='#' className='' aria-current='true'>
+							<Link to='#'>
 								Categories
 							</Link>
 						</div>
 						<div className='px-2 text-[16px] font-bold rounded-t-lg mb-3'>
 							{uniqueSubTypeCategories.map((category, index) => (
-								<Link key={index} to='#' className=''>
+								<Link key={index} to='#'>
 									{category}
 								</Link>
 							))}
@@ -117,13 +120,13 @@ export const Category = () => {
 
 					<div className='mb-3'>
 						<div className='bg-blue-500 p-3 text-[16px] font-bold text-white rounded-t-lg mb-3'>
-							<Link to='#' className='' aria-current='true'>
+							<Link to='#'>
 								Sub-Categories
 							</Link>
 						</div>
 						<div className='px-2 text-[16px] font-bold rounded-t-lg mb-3'>
 							{uniqueCategories.map((category, index) => (
-								<Link key={index} to='#' className=''>
+								<Link key={index} to='#'>
 									{category}
 								</Link>
 							))}
@@ -132,13 +135,13 @@ export const Category = () => {
 
 					<div className=''>
 						<div className='bg-blue-500 p-3 text-[16px] font-bold text-white rounded-t-lg mb-3'>
-							<Link to='#' className='' aria-current='true'>
+							<Link to='#'>
 								Brand
 							</Link>
 						</div>
 						<div className='px-2 text-[16px] font-bold rounded-t-lg mb-3'>
 							{uniqueBrands.map((brand, index) => (
-								<Link key={index} to='#' className=''>
+								<Link key={index} to='#'>
 									{brand}
 								</Link>
 							))}
@@ -146,10 +149,7 @@ export const Category = () => {
 					</div>
 				</div>
 
-				<div className='lg:col-span-8 md:block'>
-					<div className=''>
-						<small className=''></small>
-					</div>
+				<div className='lg:col-span-8'>
 					{error && <div className='text-red-500'>{error}</div>}
 					{isLoading ? (
 						<div className='text-center'>Loading...</div>
@@ -160,11 +160,11 @@ export const Category = () => {
 								key={index}
 							>
 								<div className='lg:col-span-3 col-span-12 lg:mt-5'>
-									<div className="flex object-cover object-center w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75">
+									<div className="flex object-cover object-center w-[150px] h-[150px] xl:w-[200px] xl:h-[200px] mx-auto overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75">
 										<img
 											src={product.image}
 											alt={product.name}
-											className="items-center h-full w-full object-cover object-center lg:h-full lg:w-3/4 mx-auto"
+											className="items-center h-1/2 w-1/2 object-cover object-center lg:h-full lg:w-3/4 mx-auto"
 										/>
 									</div>
 								</div>
@@ -195,16 +195,14 @@ export const Category = () => {
 						<button
 							onClick={prevPage}
 							disabled={currentPage === 1}
-							className={`mr-2 px-3 py-1 bg-blue-500 text-white rounded-md ${currentPage === 1 && 'opacity-50 cursor-not-allowed'
-								}`}
+							className={`mr-2 px-3 py-1 bg-blue-500 text-white rounded-md ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
 						>
 							<ArrowLeft />
 						</button>
 						<button
 							onClick={nextPage}
 							disabled={currentPage === totalPages}
-							className={`px-3 py-1 bg-blue-500 text-white rounded-md ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'
-								}`}
+							className={`px-3 py-1 bg-blue-500 text-white rounded-md ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
 						>
 							<ArrowRight />
 						</button>

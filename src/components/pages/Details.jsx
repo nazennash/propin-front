@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Heart } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../components/pages/stores/Cart';
 import gif from '../../assets/thank_you.gif';
 import { useAuth } from '../Auth';
+import { axiosInstance } from '../../apiconfig.jsx';
 
 export const Details = () => {
 	const [showModal, setShowModal] = useState(false);
-	const { productId } = useParams();
+	const { productId } = useParams();  // Getting the productId from the URL parameters
 	const [productData, setProductData] = useState({});
 	const dispatch = useDispatch();
-	const auth = useAuth()
+	const auth = useAuth();
 
 	useEffect(() => {
 		const getProductData = async () => {
 			try {
-				const url = `https://pinacore-rnlyj.ondigitalocean.app/products/products/${productId}/`;
-				const response = await axios.get(url);
+				// Ensure the productId is passed correctly in the API request
+				const response = await axiosInstance.get(`/products/products/${productId}/`);
 				setProductData(response.data);
 			} catch (error) {
 				console.error('Error fetching product details:', error.message);
 			}
 		};
 
-		getProductData();
+		// Fetch product data when the component mounts and when productId changes
+		if (productId) {
+			getProductData();
+		}
 	}, [productId]);
 
 	const handleAddToCart = () => {
@@ -43,35 +46,25 @@ export const Details = () => {
 		try {
 			const token = localStorage.getItem('authToken');
 			const phoneNumber = localStorage.getItem('phoneNumber');
-			const price = parseInt(productData.discounted_price)
+			const price = parseInt(productData.discounted_price);
 
-			console.log(phoneNumber)
-			console.log(token)
-			console.log(productData.discounted_price)
-
-
-			const response = await axios.post(
-				`https://pinacore-rnlyj.ondigitalocean.app/products/payment/`,
+			const response = await axiosInstance.post(
+				'/products/payment/',
 				{
 					price,
 					phone_number: phoneNumber,
 				},
 				{
 					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Token ${token}`,
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			);
 
-			console.log("nash")
-
 			if (response.status === 201) {
-				console.log('Payment successful');
 				setShowModal(true);
 			} else {
 				console.error('Failed to process payment');
-				setShowModal(true);
 			}
 
 		} catch (error) {
@@ -100,12 +93,12 @@ export const Details = () => {
 			<div className='grid lg:grid-cols-10 border grid-cols-2 mt-10'>
 				<div className='col-span-4 lg:m-auto mx-auto mt-10'>
 					<img
-						className='w-[200px] h-[200px] lg:w-[300px] lg:h-[300px]'
+						// className='w-[100px] h-[100px] lg:w-[300px] lg:h-[300px]'
 						src={productData.image}
 						alt={productData.name}
-						style={{
-							objectFit: 'cover',
-						}}
+						// style={{ objectFit: 'cover' }}
+						className="w-full h-[200px] object-cover object-center"
+						style={{ maxHeight: '500px' }}
 					/>
 				</div>
 				<div className='col-span-5 p-10 border-l'>
@@ -128,11 +121,11 @@ export const Details = () => {
 						<br />
 						<div className='mb-5'>
 							<span className='font-bold'>Color: </span>
-							<span className=''>{productData.color}</span>
+							<span>{productData.color}</span>
 						</div>
 						<div className='mb-5'>
 							<span className='font-bold'>Size: </span>
-							<span className=''>{productData.size}</span>
+							<span>{productData.size}</span>
 						</div>
 						<div className='flex'>
 							<span className='font-bold'>
@@ -141,33 +134,30 @@ export const Details = () => {
 							<span>- Save for later</span>
 						</div>
 						<br />
-						{!auth.user && (
+						{auth.user ? (
+							<div className='flex text-center'>
+								<button
+									onClick={buyNow}
+									className='bg-green-700 p-2 rounded-md text-[14px] text-white mr-4'
+								>
+									Buy Now
+								</button>
+								<button
+									onClick={handleAddToCart}
+									className='bg-blue-500 p-2 rounded-md text-[14px] text-white hover:text-blue-800'
+								>
+									Add to Cart
+								</button>
+							</div>
+						) : (
 							<div className='text-center text-red-500 mb-2'>
-								<span>Please <Link to="/register" className='hover:text-blue-600' >login</Link> to buy now</span>
+								<span>Please <Link to="/register" className='hover:text-blue-600'>login</Link> to buy now</span>
 							</div>
 						)}
-						<div className='flex text-center'>
-
-							<button
-								onClick={() => buyNow()}
-								className='bg-green-700 p-2 rounded-md text-[14px] text-white mr-4'
-							>
-
-								Buy Now
-							</button>
-
-							<button
-								onClick={handleAddToCart}
-								className='bg-blue-500 p-2 rounded-md text-[14px] text-white hover:text-blue-800'
-							>
-								Add to Cart
-							</button>
-						</div>
 					</div>
 				</div>
 			</div>
-			<br />
-			<br />
-		</div >
+			<br /><br />
+		</div>
 	);
 };

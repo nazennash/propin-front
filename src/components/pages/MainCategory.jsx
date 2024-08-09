@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
+import { axiosInstance } from "../../apiconfig.jsx"; // Import axiosInstance
 
 export const MainCategory = ({ toggleMobileMenu }) => {
     const [mainCategories, setMainCategories] = useState([]);
@@ -11,10 +11,8 @@ export const MainCategory = ({ toggleMobileMenu }) => {
 
     const getMainCategories = async () => {
         try {
-            const url = `https://pinacore-rnlyj.ondigitalocean.app/products/main_category/`;
-            const response = await axios.get(url);
+            const response = await axiosInstance.get("/products/main_category/");
             setMainCategories(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error("Error fetching categories:", error.message);
         }

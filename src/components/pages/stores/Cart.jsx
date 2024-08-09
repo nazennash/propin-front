@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const initialState = {
@@ -40,9 +40,9 @@ const cartSlice = createSlice({
       }
     },
 
-
-    fetchCartItems(state) {
-      state.items = [];
+    fetchCartItems(state, action) {
+      // Assuming the cart items are already persisted, no need to do anything
+      // Redux-Persist will automatically rehydrate the state when the app loads
     }
   }
 });

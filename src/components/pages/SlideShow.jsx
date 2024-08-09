@@ -13,7 +13,6 @@ export const SlideShow = () => {
 		{
 			url: 'https://images.unsplash.com/photo-1661961112951-f2bfd1f253ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80',
 		},
-
 		{
 			url: 'https://images.unsplash.com/photo-1512756290469-ec264b7fbf87?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2253&q=80',
 		},
@@ -50,11 +49,13 @@ export const SlideShow = () => {
 
 	return (
 		<div className='p-5'>
-			<div className='object-cover h-[15rem] md:h-[20rem] lg:h-[22rem] m-auto relative group'>
+			<div className='relative h-[15rem] md:h-[20rem] lg:h-[22rem] m-auto group'>
 				<div
-					style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
+					style={{
+						backgroundImage: `url(${slides[currentIndex].url})`,
+					}}
 					className='w-full h-full rounded-2xl bg-center bg-cover duration-500'
-				></div>
+				/>
 				<div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
 					<BsChevronCompactLeft onClick={prevSlide} size={30} />
 				</div>
