@@ -118,13 +118,13 @@ export const AddProduct = () => {
             console.log(`${key}:`, value);
         });
 
-        console.log(localStorage.getItem('authToken'))
+        console.log(localStorage.getItem('token'))
 
         try {
             await axiosPrivateInstance.post('/products/products/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
             setSuccess(true);

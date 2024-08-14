@@ -13,7 +13,7 @@ export const axiosPrivateInstance = axios.create({
 // Add an interceptor to include the token in the request headers
 axiosPrivateInstance.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

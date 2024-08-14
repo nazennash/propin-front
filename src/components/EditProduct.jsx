@@ -81,7 +81,7 @@ export const EditProduct = () => {
         try {
             const response = await axiosPrivateInstance.get(`/products/products/${productId}/`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
             const product = response.data;
@@ -132,7 +132,7 @@ export const EditProduct = () => {
             await axiosPrivateInstance.put(`/products/products/${productId}/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
             setSuccess(true);

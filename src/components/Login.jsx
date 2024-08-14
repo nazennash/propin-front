@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosPrivateInstance } from '../apiconfig';
@@ -9,13 +8,13 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const auth = useAuth();
+    const { login } = useAuth(); // Extract login function from auth context
 
     // Redirect to dashboard if there is an existing token
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('token');
         if (token) {
-            navigate('/');
+            navigate('/'); // Redirect to homepage if token exists
         }
     }, [navigate]);
 
@@ -27,14 +26,21 @@ const Login = () => {
                 password
             });
             const token = response.data.access;
+            const user = response.data.username;
+
+            // Log token and user for debugging
             console.log('Login response:', response.data);
             console.log('Token:', token);
-            const user = response.data.username;
-            console.log('Login response:', response.data);
-            localStorage.setItem('authToken', token);
-            localStorage.setItem('authUser', JSON.stringify(user));
-            auth.login(user);
-            console.log("User:", user);
+            console.log('User:', user);
+
+            // Store token and user in local storage
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            // Set user authentication state
+            login(user);
+
+            // Redirect to homepage after successful login
             navigate('/');
         } catch (error) {
             console.error('Login error:', error);

@@ -1,4 +1,3 @@
-// src/components/SellerDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Auth';
@@ -12,12 +11,9 @@ export const SellerDashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchProducts();
-        // if (user) {
-        //     fetchProducts();
-        // } else {
-        //     navigate('/login'); // Redirect to login if no user
-        // }
+        if (user) {
+            fetchProducts();
+        }
     }, [user]);
 
     const fetchProducts = async () => {
@@ -25,7 +21,7 @@ export const SellerDashboard = () => {
         try {
             const response = await axiosPrivateInstance.get('products/products/', {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
 
@@ -50,7 +46,7 @@ export const SellerDashboard = () => {
         try {
             await axiosPrivateInstance.delete(`products/products/${productId}/`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
             setProducts(products.filter(product => product.id !== productId));
@@ -109,7 +105,7 @@ export const SellerDashboard = () => {
                 ) : (
                     <div>
                         {products.length === 0 ? (
-                            <div className="mx-auto  text-center text-gray-500">No products found. Kindly login to add a product.</div>
+                            <div className="mx-auto text-center text-gray-500">No products found. Kindly login to add a product.</div>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="min-w-full bg-white border border-gray-200">

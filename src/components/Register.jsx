@@ -12,7 +12,7 @@ const Register = () => {
 
     // Redirect to dashboard if there is an existing token
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('token');
         if (token) {
             navigate('/');
         }
