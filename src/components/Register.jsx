@@ -1,16 +1,15 @@
-// src/components/Register.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosPrivateInstance } from '../apiconfig';
 
 const Register = () => {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Redirect to dashboard if there is an existing token
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -26,6 +25,7 @@ const Register = () => {
         }
         try {
             await axiosPrivateInstance.post('users/seller-register/', {
+                username,
                 email,
                 password
             });
@@ -41,6 +41,17 @@ const Register = () => {
             <h1 className="text-3xl font-bold mb-5">Register</h1>
             {error && <div className="text-red-500 mb-4">{error}</div>}
             <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+                <div className="mb-4">
+                    <label htmlFor="username" className="block text-gray-700">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                        required
+                    />
+                </div>
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-gray-700">Email</label>
                     <input
