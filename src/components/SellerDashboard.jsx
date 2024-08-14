@@ -105,7 +105,7 @@ export const SellerDashboard = () => {
                 ) : (
                     <div>
                         {products.length === 0 ? (
-                            <div className="mx-auto text-center text-gray-500">No products found. Kindly login to add a product.</div>
+                            <div className="mx-auto text-center text-gray-500">No products found. </div>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="min-w-full bg-white border border-gray-200">
