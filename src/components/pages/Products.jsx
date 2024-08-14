@@ -52,7 +52,7 @@ export const Products = () => {
                 <h2><span className="text-2xl font-bold text-gray-900">Products |</span> Don't miss the current offers until the end of August</h2>
                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8 m-3 sm:mx-0">
                     {products.map((product, index) => (
-                        <div key={index} className="group relative border rounded-lg p-3 flex flex-col justify-between h-[400px]"> {/* Ensure same card height */}
+                        <div key={index} className="group relative border rounded-lg p-3 flex flex-col justify-between">
                             <div>
                                 <div className='flex items-center justify-between'>
                                     <span className='bg-blue-500 text-white p-1 rounded-full text-[12px] font-bold text-center flex items-center justify-center'
