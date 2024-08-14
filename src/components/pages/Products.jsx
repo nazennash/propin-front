@@ -68,8 +68,8 @@ export const Products = () => {
                                             src={product.image}
                                             alt={product.name}
                                             className="w-full h-40 object-cover overflow-hidden object-center"
-                                        // className="w-full h-[200px] object-cover object-center"
-                                        // style={{ maxHeight: '200px' }}
+                                            // className="w-full h-[200px] object-cover object-center"
+                                            style={{ maxHeight: '200px' }}
                                         />
                                     </div>
                                 </Link>
