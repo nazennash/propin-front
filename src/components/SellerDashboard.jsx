@@ -12,11 +12,12 @@ export const SellerDashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
-            fetchProducts();
-        } else {
-            navigate('/login'); // Redirect to login if no user
-        }
+        fetchProducts();
+        // if (user) {
+        //     fetchProducts();
+        // } else {
+        //     navigate('/login'); // Redirect to login if no user
+        // }
     }, [user]);
 
     const fetchProducts = async () => {
