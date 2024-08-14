@@ -43,7 +43,7 @@ export const MainCategoryList = () => {
                                     <img
                                         src={category.image}
                                         alt={category.name}
-                                        className="w-full h-[200px] object-cover object-center"
+                                        className="w-full h-40 object-cover overflow-hidden object-center"
                                         style={{ maxHeight: '200px' }}
                                     />
                                 </div>

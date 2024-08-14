@@ -39,7 +39,10 @@ const Cart = () => {
 		try {
 			const token = localStorage.getItem('authToken');
 			const phoneNumber = localStorage.getItem('phoneNumber');
+			console.log(phoneNumber);
 			const price = parseInt(totalAmount);
+			console.log(price);
+
 
 			const response = await axiosInstance.post(
 				`/products/payment/`,
@@ -55,11 +58,13 @@ const Cart = () => {
 				}
 			);
 
+
 			if (response.status === 201) {
 				setShowModal(true);
-			} else {
+			} else if (response.status === 400) {
+				setShowModal(false);
 				console.error('Failed to process payment');
-				setShowModal(true);
+
 			}
 
 		} catch (error) {

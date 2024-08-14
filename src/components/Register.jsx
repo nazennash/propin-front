@@ -20,6 +20,7 @@ export const Register = () => {
   const requestOtp = async () => {
     setLoading(true);
     setError('');
+    console.log(phoneNumber);
     try {
       await axiosInstance.post('users/request-otp/', { phone_number: phoneNumber });
       setView('verifyOTP');
@@ -47,6 +48,8 @@ export const Register = () => {
       const phone_number = response.data.phone_number;
       const name = response.data.name;
 
+      console.log("data", response.data);
+
       localStorage.setItem('authToken', token);
       localStorage.setItem('refreshToken', refresh);
       localStorage.setItem('phoneNumber', phone_number);
@@ -69,8 +72,9 @@ export const Register = () => {
     setError('');
     try {
       await axiosInstance.post('users/register/', { phone_number: phoneNumber, name: name });
-      alert('Registered successfully');
-      setView('requestOTP');  // Go back to request OTP view
+      // alert('Registered successfully');
+      console.log('Registered successfully');
+      setView('requestOTP');
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('User already exists');

@@ -63,12 +63,13 @@ export const Products = () => {
                                     <span className="mt-1 text-sm text-gray-500">{product.color}</span>
                                 </div>
                                 <Link to={`/details/${product.id}/`}>
-                                    <div className="flex justify-center items-center mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-[150px]"> {/* Ensure same image size */}
+                                    <div className="flex justify-center items-center mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-[150px] mt-2">
                                         <img
                                             src={product.image}
                                             alt={product.name}
-                                            className="w-full h-[200px] object-cover object-center"
-                                            style={{ maxHeight: '200px' }}
+                                            className="w-full h-40 object-cover overflow-hidden object-center"
+                                        // className="w-full h-[200px] object-cover object-center"
+                                        // style={{ maxHeight: '200px' }}
                                         />
                                     </div>
                                 </Link>
