@@ -15,7 +15,7 @@ const Login = () => {
     useEffect(() => {
         const token = localStorage.getItem('authToken');
         if (token) {
-            navigate('/dashboard');
+            navigate('/');
         }
     }, [navigate]);
 
@@ -35,7 +35,7 @@ const Login = () => {
             localStorage.setItem('authUser', JSON.stringify(user));
             auth.login(user);
             console.log("User:", user);
-            navigate('/dashboard');
+            navigate('/');
         } catch (error) {
             console.error('Login error:', error);
             setError('Invalid credentials');

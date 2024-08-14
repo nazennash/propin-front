@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
         console.log("Userdata", userData);
         // localStorage.setItem('authToken', userData.token);
         localStorage.setItem('authUser', JSON.stringify(userData));
-        navigate('/dashboard');
+        navigate('/');
     };
 
     const logout = () => {

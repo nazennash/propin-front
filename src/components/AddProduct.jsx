@@ -128,7 +128,7 @@ export const AddProduct = () => {
                 }
             });
             setSuccess(true);
-            setTimeout(() => navigate('/seller-dashboard'), 2000);
+            setTimeout(() => navigate('/'), 2000);
         } catch (err) {
             console.error('Error adding product:', err.response ? err.response.data : err.message);
             setError('Failed to add product. Please try again.');

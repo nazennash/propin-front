@@ -136,7 +136,7 @@ export const EditProduct = () => {
                 }
             });
             setSuccess(true);
-            setTimeout(() => navigate('/seller-dashboard'), 2000);  // Redirect after 2 seconds
+            setTimeout(() => navigate('/'), 2000);
         } catch (err) {
             console.error('Error updating product:', err);
             setError('Failed to update product. Please try again.');
