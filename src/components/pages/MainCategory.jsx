@@ -32,11 +32,11 @@ export const MainCategory = ({ toggleMobileMenu }) => {
                 onClick={() => toggleMobileMenu()}
                 aria-controls="mobile-menu"
               >
-                <img
+                {/* <img
                   src={image}
                   alt={name}
                   className="w-10 h-10 mr-2 inline-block"
-                />
+                /> */}
                 {name}
               </NavLink>
             </li>
