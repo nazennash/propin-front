@@ -6,52 +6,40 @@ import { Link } from "react-router-dom";
 import { axiosInstance } from "../../apiconfig.jsx"; // Import axiosInstance
 
 export const NewArrivals = () => {
-  const carts = useSelector((store) => store.cart.items); // Access cart items from Redux store
+  const carts = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
 
   const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Track current page
-  const [nextPageUrl, setNextPageUrl] = useState(null); // Track next page URL
-  const [prevPageUrl, setPrevPageUrl] = useState(null); // Track previous page URL
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    getProducts(currentPage); // Fetch products when page changes
+    getProducts();
   }, [currentPage]);
 
-  // Fetch new arrivals with pagination
-  const getProducts = async (page) => {
+  const getProducts = async () => {
     try {
       const response = await axiosInstance.get(
         `/products/products/new_arrivals/`,
         {
-          params: { page: page },
+          params: { page: currentPage },
         }
       );
-      setProducts(response.data.results); // Update products state with paginated results
-      setNextPageUrl(response.data.next); // Update next page URL
-      setPrevPageUrl(response.data.previous); // Update previous page URL
+      setProducts(response.data.results);
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
   };
 
-  // Handle pagination to the next page
   const nextPage = () => {
-    if (nextPageUrl) {
-      // Only move to the next page if it exists
-      setCurrentPage(currentPage + 1);
-    }
+    setCurrentPage(currentPage + 1);
   };
 
-  // Handle pagination to the previous page
   const prevPage = () => {
-    if (prevPageUrl && currentPage > 1) {
-      // Only move to previous page if it exists
+    if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  // Handle adding a product to the cart
   const handleAddToCart = (product) => {
     dispatch(
       addToCart({
@@ -73,9 +61,9 @@ export const NewArrivals = () => {
           Don't miss this opportunity
         </h2>
         <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:gap-x-8 m-3 sm:mx-0">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div
-              key={product.id}
+              key={index}
               className="group relative border rounded-lg p-3 flex flex-col justify-between"
             >
               <div>
@@ -86,6 +74,7 @@ export const NewArrivals = () => {
                   >
                     {product.discount_percentage}%
                   </span>
+
                   <span className="mt-1 text-sm text-gray-500">
                     {product.color}
                   </span>
@@ -93,9 +82,10 @@ export const NewArrivals = () => {
                 <Link to={`/details/${product.id}/`}>
                   <div className="flex justify-center items-center mx-auto overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 h-[150px] mt-2">
                     <img
-                      src={product.images[0]} // Assuming the first image is displayed
+                      src={product.image}
                       alt={product.name}
                       className="w-full h-40 object-cover overflow-hidden object-center"
+                      // className="w-full h-[200px] object-cover object-center"
                       style={{ maxHeight: "200px" }}
                     />
                   </div>
@@ -104,10 +94,13 @@ export const NewArrivals = () => {
               <div className="mt-4 flex justify-between items-end">
                 <div>
                   <h3 className="text-md text-gray-700 font-bold">
-                    <Link to={`/details/${product.id}/`}>{product.name}</Link>
+                    <Link to={`/details/${product.id}/`}>
+                      <span aria-hidden="true" className="" />
+                      {product.name}
+                    </Link>
                   </h3>
                   <p className="text-sm font-medium text-gray-900">
-                    ${product.price}
+                    {product.price}
                   </p>
                 </div>
                 <button
@@ -120,24 +113,17 @@ export const NewArrivals = () => {
             </div>
           ))}
         </div>
-
-        {/* Pagination Controls */}
         <div className="mt-4 flex justify-center">
           <button
             onClick={prevPage}
-            disabled={!prevPageUrl} // Disable if no previous page
-            className={`mr-2 px-3 py-1 bg-blue-500 text-white rounded-md ${
-              !prevPageUrl ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            disabled={currentPage === 1}
+            className="mr-2 px-3 py-1 bg-blue-500 text-white rounded-md"
           >
             <ArrowLeft />
           </button>
           <button
             onClick={nextPage}
-            disabled={!nextPageUrl} // Disable if no next page
-            className={`px-3 py-1 bg-blue-500 text-white rounded-md ${
-              !nextPageUrl ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className="px-3 py-1 bg-blue-500 text-white rounded-md"
           >
             <ArrowRight />
           </button>

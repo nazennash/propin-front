@@ -11,7 +11,6 @@ export const Details = () => {
   const [showModal, setShowModal] = useState(false);
   const { productId } = useParams(); // Getting the productId from the URL parameters
   const [productData, setProductData] = useState({});
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track the current image index
   const dispatch = useDispatch();
   const auth = useAuth();
 
@@ -74,23 +73,6 @@ export const Details = () => {
     }
   };
 
-  // Handle image navigation
-  const nextImage = () => {
-    if (
-      productData.images &&
-      currentImageIndex < productData.images.length - 1
-    ) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  };
-
-  const prevImage = () => {
-    if (productData.images && currentImageIndex > 0) {
-      setCurrent;
-      Index(currentImageIndex - 1);
-    }
-  };
-
   return (
     <div className="container mx-auto lg:p-10">
       {showModal && (
@@ -110,39 +92,16 @@ export const Details = () => {
         </div>
       )}
       <div className="grid lg:grid-cols-10 border grid-cols-2 mt-10">
-        {/* Image Carousel */}
         <div className="col-span-4 lg:m-auto mx-auto mt-10">
-          {productData.images && productData.images.length > 0 ? (
-            <div className="relative">
-              <img
-                src={productData.images[currentImageIndex]}
-                alt={productData.name}
-                className="w-full h-[200px] object-cover object-center"
-                style={{ maxHeight: "500px" }}
-              />
-              {/* Previous Button */}
-              <button
-                onClick={prevImage}
-                disabled={currentImageIndex === 0}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 px-2 py-1 text-lg"
-              >
-                &lt;
-              </button>
-              {/* Next Button */}
-              <button
-                onClick={nextImage}
-                disabled={currentImageIndex === productData.images.length - 1}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 px-2 py-1 text-lg"
-              >
-                &gt;
-              </button>
-            </div>
-          ) : (
-            <p>No images available</p>
-          )}
+          <img
+            // className='w-[100px] h-[100px] lg:w-[300px] lg:h-[300px]'
+            src={productData.image}
+            alt={productData.name}
+            // style={{ objectFit: 'cover' }}
+            className="w-full h-[200px] object-cover object-center"
+            style={{ maxHeight: "500px" }}
+          />
         </div>
-
-        {/* Product Details */}
         <div className="col-span-5 p-10 border-l">
           <div className="">
             <div className="font-bold text-3xl">{productData.brand}</div>
