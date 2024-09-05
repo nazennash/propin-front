@@ -86,7 +86,8 @@ export const Details = () => {
 
   const prevImage = () => {
     if (productData.images && currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
+      setCurrent;
+      Index(currentImageIndex - 1);
     }
   };
 
@@ -116,7 +117,7 @@ export const Details = () => {
               <img
                 src={productData.images[currentImageIndex]}
                 alt={productData.name}
-                className="w-full h-[400px] object-cover object-center"
+                className="w-full h-[200px] object-cover object-center"
                 style={{ maxHeight: "500px" }}
               />
               {/* Previous Button */}
