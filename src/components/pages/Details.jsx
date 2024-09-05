@@ -80,7 +80,7 @@ export const Details = () => {
       productData.images &&
       currentImageIndex < productData.images.length - 1
     ) {
-      setCurrentImageIndex(currentImageIndex + 1);
+      setCurrentImageIndex(currentImageIndex - 1);
     }
   };
 
